@@ -45,7 +45,7 @@ it.skip('Purchase test',()=>{
     cy.get('#qty').type('3');
     cy.get('#product-addtocart-button').click();
 })
-it.only('checkout test',()=>{
+it('checkout test',()=>{
     cy.visit('/')
     cy.contains('Sign In ').click();
     cy.get('#email').type('zxcvb15@gmail.com');
@@ -58,7 +58,6 @@ it.only('checkout test',()=>{
     cy.get('#option-label-color-93-item-53').wait(1000).click();
     cy.get('#qty').wait(1000).clear().type('3');
     cy.get('#product-addtocart-button').wait(500).click();
-    /* ==== Generated with Cypress Studio ==== */
     cy.get('.showcart').click();
     cy.get('#top-cart-btn-checkout').wait(3000).click();
     cy.wait(10000).get('[name=firstname]').clear().type('Diaa');
@@ -72,9 +71,20 @@ it.only('checkout test',()=>{
     cy.get('[name=telephone]').type('0123456789');
     cy.get('[data-role=opc-continue]').click()
     cy.contains('Place Order').click()
-
-    
-
-
-    
+})
+it.only('Rate product test',()=>{
+    cy.visit('/')
+    cy.contains('Sign In ').click();
+    cy.get('#email').type('zxcvb15@gmail.com');
+    cy.get('#pass').type('Aa123456*');
+    cy.get(' #send2').first().click();
+    cy.get('#ui-id-5 > :nth-child(2)').click();
+    cy.get('.categories-menu > :nth-child(2) > :nth-child(2) > a').click();
+    cy.get(':nth-child(4) > .product-item-info > .photo > .product-image-container > .product-image-wrapper > .product-image-photo').click();
+    cy.get('#tab-label-reviews-title').click();
+    cy.get('#Rating_4_label').click({force:true});
+    cy.get('#nickname_field').wait(3000).clear().type('Diaa')
+    cy.get('#summary_field').wait(1000).type('good value for the money');
+    cy.get('#review_field').wait(1000).type('would really recommend it to my friends');
+    cy.get('.actions-primary > .action > span').click();
 })
