@@ -16,7 +16,7 @@ it('Sign up test',()=>{
     cy.get('.message-success').should('contain','Thank you for registering with Main Website Store.')
     cy.title().should('eql','My Account')
 })
-it.only('Sign in test',()=>{
+it('Sign in test',()=>{
     cy.visit('/')
     cy.contains('Sign In ').should('be.visible').click();
     cy.get('#email').should('be.visible').type('zxcvb15@gmail.com');
@@ -24,7 +24,7 @@ it.only('Sign in test',()=>{
     cy.get(' #send2').should('be.visible').first().click();
     cy.get('.logged-in').should('contain.text','Welcome, diaa mohamed!');
 })
-it('Search test',()=>{
+it.only('Search test',()=>{
     cy.visit('/')
     cy.contains('Sign In ').click();
     cy.get('#email').should('be.visible').type('zxcvb15@gmail.com');
@@ -32,6 +32,7 @@ it('Search test',()=>{
     cy.get(' #send2').first().should('be.visible').click();
     cy.get('#search').should('be.visible').type('watch{enter}');
     cy.get(':nth-child(1) > .product-item-info > .photo > .product-image-container > .product-image-wrapper > .product-image-photo').click();
+    cy.get('.base').should('include.text','Watch')//The word it asserts is case sensitive.
     cy.contains('Add to Wish List').click();
 })
 it('Purchase test',()=>{
