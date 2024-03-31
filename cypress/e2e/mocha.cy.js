@@ -47,10 +47,13 @@ it.only('Purchase test',()=>{
     cy.get('#ui-id-5 > :nth-child(2)').click();
     cy.get('.categories-menu > :nth-child(2) > :nth-child(2) > a').click();
     cy.get(':nth-child(4) > .product-item-info > .photo > .product-image-container > .product-image-wrapper > .product-image-photo').click();
-    cy.get('#option-label-size-143-item-168').click();
-    cy.get('#option-label-color-93-item-53').click();
-    cy.get('#qty').clear().type('3');
-    cy.get('#product-addtocart-button').click();
+    cy.get('#option-label-size-143-item-168').wait(1000).click();
+    cy.get('#option-label-color-93-item-53').wait(1000).click();
+    cy.get('#qty').wait(1000).clear().type('3');
+    cy.get('#product-addtocart-button').wait(500).click();
+    cy.get('.counter-number').click();
+    cy.get('[title="Remove item"]').click();
+    cy.get('.action-accept').click();
 })
 it('checkout test',()=>{
     cy.visit('/')
