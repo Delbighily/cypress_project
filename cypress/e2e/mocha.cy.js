@@ -3,34 +3,34 @@
 
 
 
-it.only('Sign up test',()=>{
+it('Sign up test',()=>{
     cy.visit('/')
     cy.contains('Create an Account').click();
     cy.title().should('eql','Create New Customer Account')
     cy.get('#firstname').should('be.visible').type('diaa');
     cy.get('#lastname').should('be.visible').type('mohamed');
-    cy.get('#email_address').should('be.visible').type('zxcvb20@gmail.com');
+    cy.get('#email_address').should('be.visible').type('zxcvb21@gmail.com');
     cy.get('#password').should('be.visible').type('Aa123456*');
     cy.get('#password-confirmation').should('be.visible').type('Aa123456*');
     cy.get('.submit').click();
     cy.get('.message-success').should('contain','Thank you for registering with Main Website Store.')
     cy.title().should('eql','My Account')
 })
-it('Sign in test',()=>{
+it.only('Sign in test',()=>{
     cy.visit('/')
-    cy.contains('Sign In ').click();
-    cy.get('#email').type('zxcvb15@gmail.com');
+    cy.contains('Sign In ').should('be.visible').click();
+    cy.get('#email').should('be.visible').type('zxcvb15@gmail.com');
     cy.get('#pass').type('Aa123456*');
-    cy.get(' #send2').first().click();
+    cy.get(' #send2').should('be.visible').first().click();
+    cy.get('.logged-in').should('contain.text','Welcome, diaa mohamed!');
 })
 it('Search test',()=>{
     cy.visit('/')
     cy.contains('Sign In ').click();
-    cy.get('#email').type('zxcvb15@gmail.com');
-    cy.get('#pass').type('Aa123456*');
-    cy.get(' #send2').first().click();
-    cy.get('#search').type('watch{enter}');
-    //cy.get('[aria-label=Search]',).click();
+    cy.get('#email').should('be.visible').type('zxcvb15@gmail.com');
+    cy.get('#pass').should('be.visible').type('Aa123456*');
+    cy.get(' #send2').first().should('be.visible').click();
+    cy.get('#search').should('be.visible').type('watch{enter}');
     cy.get(':nth-child(1) > .product-item-info > .photo > .product-image-container > .product-image-wrapper > .product-image-photo').click();
     cy.contains('Add to Wish List').click();
 })
@@ -51,7 +51,7 @@ it('Purchase test',()=>{
 it('checkout test',()=>{
     cy.visit('/')
     cy.contains('Sign In ').click();
-    cy.get('#email').type('zxcvb15@gmail.com');
+    cy.get('#email').type('zxcvb21@gmail.com');
     cy.get('#pass').type('Aa123456*');
     cy.get(' #send2').first().click();
     cy.get('#ui-id-5 > :nth-child(2)').click();
@@ -62,7 +62,7 @@ it('checkout test',()=>{
     cy.get('#qty').wait(1000).clear().type('3');
     cy.get('#product-addtocart-button').wait(500).click();
     cy.get('.showcart').click();
-    cy.get('#top-cart-btn-checkout').wait(3000).click();
+    cy.get('#top-cart-btn-checkout').wait(3000).click({force:true});
     cy.wait(10000).get('[name=firstname]').clear().type('Diaa');
     cy.get('[name=lastname]').clear().type('7ambola');
     cy.get('[name=country_id]').select('Egypt')
