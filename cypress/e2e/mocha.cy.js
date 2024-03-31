@@ -50,6 +50,8 @@ it.only('Purchase test',()=>{
     cy.get('#option-label-size-143-item-168').wait(1000).click();
     cy.get('#option-label-color-93-item-53').wait(1000).click();
     cy.get('#qty').wait(1000).clear().type('3');
+    cy.get('.swatch-attribute-selected-option').first().should('contain','M');
+    cy.get('.swatch-attribute-selected-option').last().should('contain','Green');
     cy.get('#product-addtocart-button').wait(500).click();
     cy.get('.counter-number').click();
     cy.get('[title="Remove item"]').click();
