@@ -54,6 +54,7 @@ it.only('Purchase test',()=>{
     cy.get('.counter-number').click();
     cy.get('[title="Remove item"]').click();
     cy.get('.action-accept').click();
+    cy.get('.block-minicart.block').should('contain','You have no items in your shopping cart.')
 })
 it('checkout test',()=>{
     cy.visit('/')
