@@ -3,15 +3,18 @@
 
 
 
-it('Sign up test',()=>{
+it.only('Sign up test',()=>{
     cy.visit('/')
     cy.contains('Create an Account').click();
-    cy.get('#firstname').type('diaa');
-    cy.get('#lastname').type('mohamed');
-    cy.get('#email_address').type('zxcvb15@gmail.com');
-    cy.get('#password').type('Aa123456*');
-    cy.get('#password-confirmation').type('Aa123456*');
+    cy.title().should('eql','Create New Customer Account')
+    cy.get('#firstname').should('be.visible').type('diaa');
+    cy.get('#lastname').should('be.visible').type('mohamed');
+    cy.get('#email_address').should('be.visible').type('zxcvb20@gmail.com');
+    cy.get('#password').should('be.visible').type('Aa123456*');
+    cy.get('#password-confirmation').should('be.visible').type('Aa123456*');
     cy.get('.submit').click();
+    cy.get('.message-success').should('contain','Thank you for registering with Main Website Store.')
+    cy.title().should('eql','My Account')
 })
 it('Sign in test',()=>{
     cy.visit('/')
@@ -31,7 +34,7 @@ it('Search test',()=>{
     cy.get(':nth-child(1) > .product-item-info > .photo > .product-image-container > .product-image-wrapper > .product-image-photo').click();
     cy.contains('Add to Wish List').click();
 })
-it.skip('Purchase test',()=>{
+it('Purchase test',()=>{
     cy.visit('/')
     cy.contains('Sign In ').click();
     cy.get('#email').type('zxcvb15@gmail.com');
@@ -72,7 +75,7 @@ it('checkout test',()=>{
     cy.get('[data-role=opc-continue]').click()
     cy.contains('Place Order').click()
 })
-it.only('Rate product test',()=>{
+it('Rate product test',()=>{
     cy.visit('/')
     cy.contains('Sign In ').click();
     cy.get('#email').type('zxcvb15@gmail.com');
