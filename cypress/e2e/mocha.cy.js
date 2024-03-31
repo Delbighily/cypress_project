@@ -30,10 +30,13 @@ it.only('Search test',()=>{
     cy.get('#email').should('be.visible').type('zxcvb15@gmail.com');
     cy.get('#pass').should('be.visible').type('Aa123456*');
     cy.get(' #send2').first().should('be.visible').click();
+    cy.get('.logged-in',{timeout:10000}).should('be.visible');
     cy.get('#search').should('be.visible').type('watch{enter}');
     cy.get(':nth-child(1) > .product-item-info > .photo > .product-image-container > .product-image-wrapper > .product-image-photo').click();
     cy.get('.base').should('include.text','Watch')//The word it asserts is case sensitive.
+    cy.get('.logged-in',{timeout:10000}).should('be.visible');
     cy.contains('Add to Wish List').click();
+    cy.get('.message-success').should('be.visible');
 })
 it('Purchase test',()=>{
     cy.visit('/')
