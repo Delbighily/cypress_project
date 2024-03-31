@@ -24,7 +24,7 @@ it('Sign in test',()=>{
     cy.get(' #send2').should('be.visible').first().click();
     cy.get('.logged-in').should('contain.text','Welcome, diaa mohamed!');
 })
-it.only('Search test',()=>{
+it('Search test',()=>{
     cy.visit('/')
     cy.contains('Sign In ').click();
     cy.get('#email').should('be.visible').type('zxcvb15@gmail.com');
@@ -38,7 +38,7 @@ it.only('Search test',()=>{
     cy.contains('Add to Wish List').click();
     cy.get('.message-success').should('be.visible');
 })
-it('Purchase test',()=>{
+it.only('Purchase test',()=>{
     cy.visit('/')
     cy.contains('Sign In ').click();
     cy.get('#email').type('zxcvb15@gmail.com');
@@ -49,7 +49,7 @@ it('Purchase test',()=>{
     cy.get(':nth-child(4) > .product-item-info > .photo > .product-image-container > .product-image-wrapper > .product-image-photo').click();
     cy.get('#option-label-size-143-item-168').click();
     cy.get('#option-label-color-93-item-53').click();
-    cy.get('#qty').type('3');
+    cy.get('#qty').clear().type('3');
     cy.get('#product-addtocart-button').click();
 })
 it('checkout test',()=>{
