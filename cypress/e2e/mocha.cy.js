@@ -1,20 +1,24 @@
 ///<reference types="cypress"/>
+beforeEach(()=>{
+    cy.fixture('dataFile').as('user');
+})
 
 
 
-
-it('Sign up test',()=>{
+it.only('Sign up test',()=>{
     cy.visit('/')
+    cy.get('@user').then((user)=>{
     cy.contains('Create an Account').click();
     cy.title().should('eql','Create New Customer Account')
-    cy.get('#firstname').should('be.visible').type('diaa');
-    cy.get('#lastname').should('be.visible').type('mohamed');
-    cy.get('#email_address').should('be.visible').type('zxcvb25@gmail.com');
-    cy.get('#password').should('be.visible').type('Aa123456*');
-    cy.get('#password-confirmation').should('be.visible').type('Aa123456*');
+    cy.get('#firstname').should('be.visible').type(user.firstName);
+    cy.get('#lastname').should('be.visible').type(user.lastName);
+    cy.get('#email_address').should('be.visible').type(user.email);
+    cy.get('#password').should('be.visible').type(user.password);
+    cy.get('#password-confirmation').should('be.visible').type(user.password);
     cy.get('.submit').click();
     cy.get('.message-success').should('contain','Thank you for registering with Main Website Store.')
     cy.title().should('eql','My Account')
+})
 })
 it('Sign in test',()=>{
     cy.visit('/')
@@ -87,7 +91,7 @@ it('checkout test',()=>{
     cy.contains('Place Order',{timeout:10000}).click();
     cy.contains('Your order number is: ',{timeout:10000}).should('be.visible');
 })
-it.only('Rate product test',()=>{
+it('Rate product test',()=>{
     cy.visit('/')
     cy.contains('Sign In ').click();
     cy.get('#email').type('zxcvb15@gmail.com');
