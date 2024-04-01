@@ -5,7 +5,7 @@ beforeEach(()=>{
 
 
 
-it.only('Sign up test',()=>{
+it('Sign up test',()=>{
     cy.visit('/')
     cy.get('@user').then((user)=>{
     cy.contains('Create an Account').click();
@@ -20,13 +20,15 @@ it.only('Sign up test',()=>{
     cy.title().should('eql','My Account')
 })
 })
-it('Sign in test',()=>{
+it.only('Sign in test',()=>{
     cy.visit('/')
+    cy.get('@user').then((user)=>{
     cy.contains('Sign In ').should('be.visible').click();
-    cy.get('#email').should('be.visible').type('zxcvb15@gmail.com');
-    cy.get('#pass').type('Aa123456*');
+    cy.get('#email').should('be.visible').type(user.email);
+    cy.get('#pass').type(user.password);
     cy.get(' #send2').should('be.visible').first().click();
-    cy.get('.logged-in').should('contain.text','Welcome, diaa mohamed!');
+    cy.get('.logged-in').should('contain.text','Welcome, ',user.firstName+user.lastName+'!');
+})
 })
 it('Search test',()=>{
     cy.visit('/')
