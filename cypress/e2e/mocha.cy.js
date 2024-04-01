@@ -20,7 +20,7 @@ it('Sign up test',()=>{
     cy.title().should('eql','My Account')
 })
 })
-it.only('Sign in test',()=>{
+it('Sign in test',()=>{
     cy.visit('/')
     cy.get('@user').then((user)=>{
     cy.contains('Sign In ').should('be.visible').click();
@@ -30,19 +30,21 @@ it.only('Sign in test',()=>{
     cy.get('.logged-in').should('contain.text','Welcome, ',user.firstName+user.lastName+'!');
 })
 })
-it('Search test',()=>{
+it.only('Search test',()=>{
     cy.visit('/')
+    cy.get('@user').then((user)=>{
     cy.contains('Sign In ').click();
-    cy.get('#email').should('be.visible').type('zxcvb15@gmail.com');
-    cy.get('#pass').should('be.visible').type('Aa123456*');
+    cy.get('#email').should('be.visible').type(user.email);
+    cy.get('#pass').should('be.visible').type(user.password);
     cy.get(' #send2').first().should('be.visible').click();
     cy.get('.logged-in',{timeout:10000}).should('be.visible');
-    cy.get('#search').should('be.visible').type('watch{enter}');
+    cy.get('#search').should('be.visible').type(user.searchWord+'{enter}');
     cy.get(':nth-child(1) > .product-item-info > .photo > .product-image-container > .product-image-wrapper > .product-image-photo').click();
-    cy.get('.base').should('include.text','Watch')//The word it asserts is case sensitive.
+    cy.get('.base').should('include.text',user.searchWord)//The word it asserts is case sensitive.
     cy.get('.logged-in',{timeout:10000}).should('be.visible');
     cy.contains('Add to Wish List').click();
     cy.get('.message-success').should('be.visible');
+})
 })
 it('Purchase test',()=>{
     cy.visit('/')
