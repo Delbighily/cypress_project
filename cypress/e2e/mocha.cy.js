@@ -9,7 +9,7 @@ it('Sign up test',()=>{
     cy.title().should('eql','Create New Customer Account')
     cy.get('#firstname').should('be.visible').type('diaa');
     cy.get('#lastname').should('be.visible').type('mohamed');
-    cy.get('#email_address').should('be.visible').type('zxcvb21@gmail.com');
+    cy.get('#email_address').should('be.visible').type('zxcvb25@gmail.com');
     cy.get('#password').should('be.visible').type('Aa123456*');
     cy.get('#password-confirmation').should('be.visible').type('Aa123456*');
     cy.get('.submit').click();
@@ -38,7 +38,7 @@ it('Search test',()=>{
     cy.contains('Add to Wish List').click();
     cy.get('.message-success').should('be.visible');
 })
-it.only('Purchase test',()=>{
+it('Purchase test',()=>{
     cy.visit('/')
     cy.contains('Sign In ').click();
     cy.get('#email').type('zxcvb15@gmail.com');
@@ -58,12 +58,13 @@ it.only('Purchase test',()=>{
     cy.get('.action-accept').click();
     cy.get('.block-minicart.block').should('contain','You have no items in your shopping cart.')
 })
-it('checkout test',()=>{
+it.only('checkout test',()=>{
     cy.visit('/')
     cy.contains('Sign In ').click();
-    cy.get('#email').type('zxcvb21@gmail.com');
-    cy.get('#pass').type('Aa123456*');
+    cy.get('#email').type('zxcvb25@gmail.com');
+    cy.get('#pass').wait(1000).type('Aa123456*');
     cy.get(' #send2').first().click();
+    cy.get('.logged-in',{timeout:10000}).should('be.visible');
     cy.get('#ui-id-5 > :nth-child(2)').click();
     cy.get('.categories-menu > :nth-child(2) > :nth-child(2) > a').click();
     cy.get(':nth-child(4) > .product-item-info > .photo > .product-image-container > .product-image-wrapper > .product-image-photo').click();
@@ -83,7 +84,8 @@ it('checkout test',()=>{
     cy.get('[name=postcode]').type('123456');
     cy.get('[name=telephone]').type('0123456789');
     cy.get('[data-role=opc-continue]').click()
-    cy.contains('Place Order').click()
+    cy.contains('Place Order',{timeout:10000}).click();
+    cy.contains('Your order number is: ',{timeout:10000}).should('be.visible');
 })
 it('Rate product test',()=>{
     cy.visit('/')
