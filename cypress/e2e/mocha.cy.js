@@ -30,7 +30,7 @@ it('Sign in test',()=>{
     cy.get('.logged-in').should('contain.text','Welcome, ',user.firstName+user.lastName+'!');
 })
 })
-it.only('Search test',()=>{
+it('Search test',()=>{
     cy.visit('/')
     cy.get('@user').then((user)=>{
     cy.contains('Sign In ').click();
@@ -46,11 +46,12 @@ it.only('Search test',()=>{
     cy.get('.message-success').should('be.visible');
 })
 })
-it('Purchase test',()=>{
+it.only('Purchase test',()=>{
     cy.visit('/')
+    cy.get('@user').then((user)=>{
     cy.contains('Sign In ').click();
-    cy.get('#email').type('zxcvb15@gmail.com');
-    cy.get('#pass').type('Aa123456*');
+    cy.get('#email').type(user.email);
+    cy.get('#pass').type(user.password);
     cy.get(' #send2').first().click();
     cy.get('#ui-id-5 > :nth-child(2)').click();
     cy.get('.categories-menu > :nth-child(2) > :nth-child(2) > a').click();
@@ -65,6 +66,7 @@ it('Purchase test',()=>{
     cy.get('[title="Remove item"]').click();
     cy.get('.action-accept').click();
     cy.get('.block-minicart.block').should('contain','You have no items in your shopping cart.')
+})
 })
 it('checkout test',()=>{
     cy.visit('/')
