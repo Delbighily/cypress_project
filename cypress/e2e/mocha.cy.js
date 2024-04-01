@@ -58,7 +58,7 @@ it('Purchase test',()=>{
     cy.get('.action-accept').click();
     cy.get('.block-minicart.block').should('contain','You have no items in your shopping cart.')
 })
-it.only('checkout test',()=>{
+it('checkout test',()=>{
     cy.visit('/')
     cy.contains('Sign In ').click();
     cy.get('#email').type('zxcvb25@gmail.com');
@@ -87,7 +87,7 @@ it.only('checkout test',()=>{
     cy.contains('Place Order',{timeout:10000}).click();
     cy.contains('Your order number is: ',{timeout:10000}).should('be.visible');
 })
-it('Rate product test',()=>{
+it.only('Rate product test',()=>{
     cy.visit('/')
     cy.contains('Sign In ').click();
     cy.get('#email').type('zxcvb15@gmail.com');
@@ -102,4 +102,5 @@ it('Rate product test',()=>{
     cy.get('#summary_field').wait(1000).type('good value for the money');
     cy.get('#review_field').wait(1000).type('would really recommend it to my friends');
     cy.get('.actions-primary > .action > span').click();
+    cy.get('.message-success').should('be.visible');
 })
