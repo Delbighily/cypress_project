@@ -89,8 +89,8 @@ it('checkout test',()=>{
     cy.get('[name=lastname]').clear().type('7ambola');
     cy.get('[name=country_id]').select(user.country)
     cy.get('.input-text').eq(5).clear().type(user.building);
-    cy.get('.input-text').eq(6).clear().type(user.street);
-    cy.get('.input-text').eq(7).clear().type('Ard el gamal');
+    cy.get('.input-text').eq(6).clear().type(user.floor);
+    cy.get('.input-text').eq(7).clear().type(user.street);
     cy.get('[name=city]').type('Damietta');
     cy.get('[name=postcode]').type(user.zip);
     cy.get('[name=telephone]').type(user.phone);
