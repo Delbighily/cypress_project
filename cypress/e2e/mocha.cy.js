@@ -46,7 +46,7 @@ it('Search test',()=>{
     cy.get('.message-success').should('be.visible');
 })
 })
-it.only('Purchase test',()=>{
+it('Purchase test',()=>{
     cy.visit('/')
     cy.get('@user').then((user)=>{
     cy.contains('Sign In ').click();
@@ -70,9 +70,10 @@ it.only('Purchase test',()=>{
 })
 it('checkout test',()=>{
     cy.visit('/')
+    cy.get('@user').then((user)=>{
     cy.contains('Sign In ').click();
-    cy.get('#email').type('zxcvb25@gmail.com');
-    cy.get('#pass').wait(1000).type('Aa123456*');
+    cy.get('#email').type(user.email);
+    cy.get('#pass').wait(1000).type(user.password);
     cy.get(' #send2').first().click();
     cy.get('.logged-in',{timeout:10000}).should('be.visible');
     cy.get('#ui-id-5 > :nth-child(2)').click();
@@ -86,19 +87,21 @@ it('checkout test',()=>{
     cy.get('#top-cart-btn-checkout').wait(3000).click({force:true});
     cy.wait(10000).get('[name=firstname]').clear().type('Diaa');
     cy.get('[name=lastname]').clear().type('7ambola');
-    cy.get('[name=country_id]').select('Egypt')
-    cy.get('.input-text').eq(5).clear().type('16');
-    cy.get('.input-text').eq(6).clear().type('wazeer st');
+    cy.get('[name=country_id]').select(user.country)
+    cy.get('.input-text').eq(5).clear().type(user.building);
+    cy.get('.input-text').eq(6).clear().type(user.street);
     cy.get('.input-text').eq(7).clear().type('Ard el gamal');
     cy.get('[name=city]').type('Damietta');
-    cy.get('[name=postcode]').type('123456');
-    cy.get('[name=telephone]').type('0123456789');
+    cy.get('[name=postcode]').type(user.zip);
+    cy.get('[name=telephone]').type(user.phone);
     cy.get('[data-role=opc-continue]').click()
     cy.contains('Place Order',{timeout:10000}).click();
     cy.contains('Your order number is: ',{timeout:10000}).should('be.visible');
 })
+})
 it('Rate product test',()=>{
     cy.visit('/')
+    cy.get('@user').then((user)=>{
     cy.contains('Sign In ').click();
     cy.get('#email').type('zxcvb15@gmail.com');
     cy.get('#pass').type('Aa123456*');
@@ -113,4 +116,5 @@ it('Rate product test',()=>{
     cy.get('#review_field').wait(1000).type('would really recommend it to my friends');
     cy.get('.actions-primary > .action > span').click();
     cy.get('.message-success').should('be.visible');
+})
 })
