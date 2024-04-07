@@ -85,8 +85,8 @@ it('checkout test',()=>{
     cy.get('#product-addtocart-button').wait(500).click();
     cy.get('.showcart').click();
     cy.get('#top-cart-btn-checkout').wait(3000).click({force:true});
-    cy.wait(10000).get('[name=firstname]').clear().type('Diaa');
-    cy.get('[name=lastname]').clear().type('7ambola');
+    cy.wait(10000).get('[name=firstname]').clear().type(user.firstName);
+    cy.get('[name=lastname]').clear().type(user.lastName);
     cy.get('[name=country_id]').select(user.country)
     cy.get('.input-text').eq(5).clear().type(user.building);
     cy.get('.input-text').eq(6).clear().type(user.floor);
@@ -103,15 +103,15 @@ it('Rate product test',()=>{
     cy.visit('/')
     cy.get('@user').then((user)=>{
     cy.contains('Sign In ').click();
-    cy.get('#email').type('zxcvb15@gmail.com');
-    cy.get('#pass').type('Aa123456*');
+    cy.get('#email').type(user.email);
+    cy.get('#pass').type(user.password);
     cy.get(' #send2').first().click();
     cy.get('#ui-id-5 > :nth-child(2)').click();
     cy.get('.categories-menu > :nth-child(2) > :nth-child(2) > a').click();
     cy.get(':nth-child(4) > .product-item-info > .photo > .product-image-container > .product-image-wrapper > .product-image-photo').click();
     cy.get('#tab-label-reviews-title').click();
     cy.get('#Rating_4_label').click({force:true});
-    cy.get('#nickname_field').wait(3000).clear().type('Diaa')
+    cy.get('#nickname_field').wait(3000).clear().type(user.firstName)
     cy.get('#summary_field').wait(1000).type('good value for the money');
     cy.get('#review_field').wait(1000).type('would really recommend it to my friends');
     cy.get('.actions-primary > .action > span').click();
