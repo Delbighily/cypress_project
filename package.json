@@ -11,5 +11,9 @@
   "license": "ISC",
   "devDependencies": {
     "cypress": "^13.7.2"
+  },
+  "dependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^20.0.3",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0"
   }
 }
