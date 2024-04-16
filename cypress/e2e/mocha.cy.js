@@ -1,4 +1,6 @@
 ///<reference types="cypress"/>
+import Signup from "../PageObjectModel/SignUp";
+import SignIn from "../PageObjectModel/SignIn";
 beforeEach(()=>{
     cy.fixture('dataFile').as('user');
 })
@@ -9,25 +11,24 @@ it('Sign up test',()=>{
     cy.visit('/')
     cy.get('@user').then((user)=>{
     cy.contains('Create an Account').click();
-    cy.title().should('eql','Create New Customer Account')
-    cy.get('#firstname').should('be.visible').type(user.firstName);
-    cy.get('#lastname').should('be.visible').type(user.lastName);
-    cy.get('#email_address').should('be.visible').type(user.email);
-    cy.get('#password').should('be.visible').type(user.password);
-    cy.get('#password-confirmation').should('be.visible').type(user.password);
-    cy.get('.submit').click();
-    cy.get('.message-success').should('contain','Thank you for registering with Main Website Store.')
-    cy.title().should('eql','My Account')
+    const ob1=new Signup;
+    ob1.checkPageTitle();
+    ob1.setUserName(user.firstName,user.lastName);
+    ob1.setEmailPasswprd(user.email,user.password);
+    ob1.confirmPassword(user.password);
+    ob1.clickSubmit();
+    ob1.AssertSuccess();
 })
 })
-it('Sign in test',()=>{
+it.only('Sign in test',()=>{
     cy.visit('/')
     cy.get('@user').then((user)=>{
     cy.contains('Sign In ').should('be.visible').click();
-    cy.get('#email').should('be.visible').type(user.email);
-    cy.get('#pass').type(user.password);
-    cy.get(' #send2').should('be.visible').first().click();
-    cy.get('.logged-in').should('contain.text','Welcome, ',user.firstName+user.lastName+'!');
+    const ob2=new SignIn;
+    ob2.fillEmail(user.email);
+    ob2.fillPassword(user.password);
+    ob2.clickSignin();
+    ob2.AssertSuccess(user.firstName,user.lastName);
 })
 })
 it('Search test',()=>{
