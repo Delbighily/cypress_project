@@ -3,6 +3,7 @@ import Signup from "../PageObjectModel/SignUp";
 import SignIn from "../PageObjectModel/SignIn";
 import Search from "../PageObjectModel/Search";
 import Purchase from "../PageObjectModel/Purchase";
+import Checkout from "../PageObjectModel/CheckOut";
 beforeEach(()=>{
     cy.fixture('dataFile').as('user');
 })
@@ -52,7 +53,7 @@ it('Search test',()=>{
     search.assertSuccessAdd();
 })
 })
-it.only('Purchase test',()=>{
+it('Purchase test',()=>{
     cy.visit('/')
     cy.get('@user').then((user)=>{
     cy.contains('Sign In ').click();
@@ -75,53 +76,41 @@ it.only('Purchase test',()=>{
     purchase.deleteItems();
     purchase.confirmDeletion();
     purchase.assertCorrectDeletion();
-
-    
-    /*
-    cy.get('#ui-id-5 > :nth-child(2)').click();
-    cy.get('.categories-menu > :nth-child(2) > :nth-child(2) > a').click();
-    cy.get(':nth-child(4) > .product-item-info > .photo > .product-image-container > .product-image-wrapper > .product-image-photo').click();
-    cy.get('#option-label-size-143-item-168').wait(1000).click();
-    cy.get('#option-label-color-93-item-53').wait(1000).click();
-    cy.get('#qty').wait(1000).clear().type('3');
-    cy.get('.swatch-attribute-selected-option').first().should('contain','M');
-    cy.get('.swatch-attribute-selected-option').last().should('contain','Green');
-    cy.get('#product-addtocart-button').wait(500).click();
-    cy.get('.counter-number').click();
-    cy.get('[title="Remove item"]').click();
-    cy.get('.action-accept').click();
-    cy.get('.block-minicart.block').should('contain','You have no items in your shopping cart.')*/
 })
 })
-it('checkout test',()=>{
+it.only('checkout test',()=>{
     cy.visit('/')
     cy.get('@user').then((user)=>{
     cy.contains('Sign In ').click();
-    cy.get('#email').type(user.email);
-    cy.get('#pass').wait(1000).type(user.password);
-    cy.get(' #send2').first().click();
-    cy.get('.logged-in',{timeout:10000}).should('be.visible');
-    cy.get('#ui-id-5 > :nth-child(2)').click();
-    cy.get('.categories-menu > :nth-child(2) > :nth-child(2) > a').click();
-    cy.get(':nth-child(4) > .product-item-info > .photo > .product-image-container > .product-image-wrapper > .product-image-photo').click();
-    cy.get('#option-label-size-143-item-168').wait(1000).click();
-    cy.get('#option-label-color-93-item-53').wait(1000).click();
-    cy.get('#qty').wait(1000).clear().type('3');
-    cy.get('#product-addtocart-button').wait(500).click();
-    cy.get('.showcart').click();
-    cy.get('#top-cart-btn-checkout').wait(3000).click({force:true});
-    cy.wait(10000).get('[name=firstname]').clear().type(user.firstName);
-    cy.get('[name=lastname]').clear().type(user.lastName);
-    cy.get('[name=country_id]').select(user.country)
-    cy.get('.input-text').eq(5).clear().type(user.building);
-    cy.get('.input-text').eq(6).clear().type(user.floor);
-    cy.get('.input-text').eq(7).clear().type(user.street);
-    cy.get('[name=city]').type('Damietta');
-    cy.get('[name=postcode]').type(user.zip);
-    cy.get('[name=telephone]').type(user.phone);
-    cy.get('[data-role=opc-continue]').click()
-    cy.contains('Place Order',{timeout:10000}).click();
-    cy.contains('Your order number is: ',{timeout:10000}).should('be.visible');
+    const signIn= new SignIn;
+    const purchase=new Purchase;
+    const checkout=new Checkout;
+
+    signIn.fillEmail(user.email);
+    signIn.fillPassword(user.password);
+    signIn.clickSignin();
+    signIn.AssertSuccess(user.firstName,user.lastName);
+    purchase.clickTab();
+    purchase.selectCategory();
+    purchase.selectItem();
+    purchase.selectSize();
+    purchase.selectColor();
+    purchase.setQuantity();
+    purchase.assertSelectedSize();
+    purchase.assertSelectedColor();
+    purchase.clickAddToCart();
+    purchase.clickOnCart();
+    checkout.goToCartPage();
+    checkout.fillFirstNameField(user.firstName);
+    checkout.fillLastName(user.lastName);
+    checkout.selectCountry(user.country);
+    checkout.fillAddress(user.building,user.floor,user.street);
+    checkout.fillcity(user.city);
+    checkout.fillPostCode(user.zip);
+    checkout.fillTelephone(user.phone);
+    checkout.clickNextBTN();
+    checkout.clickPlaceOrder();
+    checkout.assertSuccessfullCheckout();
 })
 })
 it('Rate product test',()=>{
