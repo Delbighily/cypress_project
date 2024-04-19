@@ -4,6 +4,7 @@ import SignIn from "../PageObjectModel/SignIn";
 import Search from "../PageObjectModel/Search";
 import Purchase from "../PageObjectModel/Purchase";
 import Checkout from "../PageObjectModel/CheckOut";
+import Rate from "../PageObjectModel/Rate";
 beforeEach(()=>{
     cy.fixture('dataFile').as('user');
 })
@@ -78,14 +79,13 @@ it('Purchase test',()=>{
     purchase.assertCorrectDeletion();
 })
 })
-it.only('checkout test',()=>{
+it('checkout test',()=>{
     cy.visit('/')
     cy.get('@user').then((user)=>{
     cy.contains('Sign In ').click();
     const signIn= new SignIn;
     const purchase=new Purchase;
     const checkout=new Checkout;
-
     signIn.fillEmail(user.email);
     signIn.fillPassword(user.password);
     signIn.clickSignin();
@@ -113,22 +113,26 @@ it.only('checkout test',()=>{
     checkout.assertSuccessfullCheckout();
 })
 })
-it('Rate product test',()=>{
+it.only('Rate product test',()=>{
     cy.visit('/')
     cy.get('@user').then((user)=>{
     cy.contains('Sign In ').click();
-    cy.get('#email').type(user.email);
-    cy.get('#pass').type(user.password);
-    cy.get(' #send2').first().click();
-    cy.get('#ui-id-5 > :nth-child(2)').click();
-    cy.get('.categories-menu > :nth-child(2) > :nth-child(2) > a').click();
-    cy.get(':nth-child(4) > .product-item-info > .photo > .product-image-container > .product-image-wrapper > .product-image-photo').click();
-    cy.get('#tab-label-reviews-title').click();
-    cy.get('#Rating_4_label').click({force:true});
-    cy.get('#nickname_field').wait(3000).clear().type(user.firstName)
-    cy.get('#summary_field').wait(1000).type('good value for the money');
-    cy.get('#review_field').wait(1000).type('would really recommend it to my friends');
-    cy.get('.actions-primary > .action > span').click();
-    cy.get('.message-success').should('be.visible');
+    const signIn= new SignIn;
+    const purchase=new Purchase;
+    const rate=new Rate;
+    signIn.fillEmail(user.email);
+    signIn.fillPassword(user.password);
+    signIn.clickSignin();
+    signIn.AssertSuccess(user.firstName,user.lastName);
+    purchase.clickTab();
+    purchase.selectCategory();
+    purchase.selectItem();
+    rate.clickReviewTab();
+    rate.give4Star();
+    rate.typeName(user.firstName);
+    rate.typeSummary();
+    rate.typeReview();
+    rate.clickSubmitReview();
+    rate.assertSuccessReview()
 })
 })
