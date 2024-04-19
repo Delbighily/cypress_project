@@ -1,6 +1,7 @@
 ///<reference types="cypress"/>
 import Signup from "../PageObjectModel/SignUp";
 import SignIn from "../PageObjectModel/SignIn";
+import Search from "../PageObjectModel/Search";
 beforeEach(()=>{
     cy.fixture('dataFile').as('user');
 })
@@ -20,7 +21,7 @@ it('Sign up test',()=>{
     ob1.AssertSuccess();
 })
 })
-it.only('Sign in test',()=>{
+it('Sign in test',()=>{
     cy.visit('/')
     cy.get('@user').then((user)=>{
     cy.contains('Sign In ').should('be.visible').click();
@@ -31,20 +32,23 @@ it.only('Sign in test',()=>{
     ob2.AssertSuccess(user.firstName,user.lastName);
 })
 })
-it('Search test',()=>{
+it.only('Search test',()=>{
     cy.visit('/')
     cy.get('@user').then((user)=>{
     cy.contains('Sign In ').click();
-    cy.get('#email').should('be.visible').type(user.email);
-    cy.get('#pass').should('be.visible').type(user.password);
-    cy.get(' #send2').first().should('be.visible').click();
-    cy.get('.logged-in',{timeout:10000}).should('be.visible');
-    cy.get('#search').should('be.visible').type(user.searchWord+'{enter}');
-    cy.get(':nth-child(1) > .product-item-info > .photo > .product-image-container > .product-image-wrapper > .product-image-photo').click();
-    cy.get('.base').should('include.text',user.searchWord)//The word it asserts is case sensitive.
-    cy.get('.logged-in',{timeout:10000}).should('be.visible');
-    cy.contains('Add to Wish List').click();
-    cy.get('.message-success').should('be.visible');
+    const signIn= new SignIn;
+    const search= new Search;
+    signIn.fillEmail(user.email);
+    signIn.fillPassword(user.password);
+    signIn.clickSignin();
+    signIn.AssertSuccess(user.firstName,user.lastName);
+    search.assertValidSignIn();
+    search.typeInSearchBar(user.searchWord);
+    search.getSearchedItem();
+    search.assertProductName(user.searchWord);
+    search.assertValidSignIn();
+    search.clickAddtoWishlist();
+    search.assertSuccessAdd();
 })
 })
 it('Purchase test',()=>{
