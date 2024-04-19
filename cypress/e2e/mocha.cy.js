@@ -2,6 +2,7 @@
 import Signup from "../PageObjectModel/SignUp";
 import SignIn from "../PageObjectModel/SignIn";
 import Search from "../PageObjectModel/Search";
+import Purchase from "../PageObjectModel/Purchase";
 beforeEach(()=>{
     cy.fixture('dataFile').as('user');
 })
@@ -32,7 +33,7 @@ it('Sign in test',()=>{
     ob2.AssertSuccess(user.firstName,user.lastName);
 })
 })
-it.only('Search test',()=>{
+it('Search test',()=>{
     cy.visit('/')
     cy.get('@user').then((user)=>{
     cy.contains('Sign In ').click();
@@ -51,13 +52,32 @@ it.only('Search test',()=>{
     search.assertSuccessAdd();
 })
 })
-it('Purchase test',()=>{
+it.only('Purchase test',()=>{
     cy.visit('/')
     cy.get('@user').then((user)=>{
     cy.contains('Sign In ').click();
-    cy.get('#email').type(user.email);
-    cy.get('#pass').type(user.password);
-    cy.get(' #send2').first().click();
+    const signIn= new SignIn;
+    const purchase=new Purchase;
+    signIn.fillEmail(user.email);
+    signIn.fillPassword(user.password);
+    signIn.clickSignin();
+    signIn.AssertSuccess(user.firstName,user.lastName);
+    purchase.clickTab();
+    purchase.selectCategory();
+    purchase.selectItem();
+    purchase.selectSize();
+    purchase.selectColor();
+    purchase.setQuantity();
+    purchase.assertSelectedSize();
+    purchase.assertSelectedColor();
+    purchase.clickAddToCart();
+    purchase.clickOnCart();
+    purchase.deleteItems();
+    purchase.confirmDeletion();
+    purchase.assertCorrectDeletion();
+
+    
+    /*
     cy.get('#ui-id-5 > :nth-child(2)').click();
     cy.get('.categories-menu > :nth-child(2) > :nth-child(2) > a').click();
     cy.get(':nth-child(4) > .product-item-info > .photo > .product-image-container > .product-image-wrapper > .product-image-photo').click();
@@ -70,7 +90,7 @@ it('Purchase test',()=>{
     cy.get('.counter-number').click();
     cy.get('[title="Remove item"]').click();
     cy.get('.action-accept').click();
-    cy.get('.block-minicart.block').should('contain','You have no items in your shopping cart.')
+    cy.get('.block-minicart.block').should('contain','You have no items in your shopping cart.')*/
 })
 })
 it('checkout test',()=>{
