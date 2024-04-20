@@ -24,12 +24,12 @@ it('Sign up test',()=>{
     ob1.AssertSuccess();
 })
 })
-it('Sign in test',()=>{
+it.only('Sign in test',()=>{
     cy.visit('/')
     cy.get('@user').then((user)=>{
     cy.contains('Sign In ').should('be.visible').click();
     const ob2=new SignIn;
-    ob2.fillEmail(user.email);
+    ob2.typeinEmailField(user.email);
     ob2.fillPassword(user.password);
     ob2.clickSignin();
     ob2.AssertSuccess(user.firstName,user.lastName);
@@ -113,7 +113,7 @@ it('checkout test',()=>{
     checkout.assertSuccessfullCheckout();
 })
 })
-it.only('Rate product test',()=>{
+it('Rate product test',()=>{
     cy.visit('/')
     cy.get('@user').then((user)=>{
     cy.contains('Sign In ').click();

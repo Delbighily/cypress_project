@@ -5,10 +5,17 @@ class SignIn
     passwordField="#pass"
     loginBTN="#send2"
 
-    fillEmail(mail)
+    getEmailField()
     {
-        cy.get(this.emailField).should('be.visible').type(mail);
+        return cy.get(this.emailField)
+        //should('be.visible')
     }
+
+    typeinEmailField(mail)
+    {
+        this.getEmailField().type(mail)
+    }
+
     fillPassword(pass)
     {
         cy.get(this.passwordField).should('be.visible').type(pass);
