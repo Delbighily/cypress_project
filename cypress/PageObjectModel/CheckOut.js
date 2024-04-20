@@ -62,7 +62,7 @@ class Checkout{
 
     fillFirstNameField(firstname)
     {
-        cy.wait(10000).this.getFirstNameField().clear().type(firstname);
+        this.getFirstNameField().wait(10000).clear().type(firstname);
     }
 
     fillLastName(lastname)

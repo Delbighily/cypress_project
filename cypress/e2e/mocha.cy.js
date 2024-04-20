@@ -11,7 +11,7 @@ beforeEach(()=>{
 
 
 
-it.only('Sign up test',()=>{
+it('Sign up test',()=>{
     cy.visit('/')
     cy.get('@user').then((user)=>{
     cy.contains('Create an Account').click();
@@ -41,7 +41,7 @@ it('Search test',()=>{
     cy.contains('Sign In ').click();
     const signIn= new SignIn;
     const search= new Search;
-    signIn.fillEmail(user.email);
+    signIn.typeinEmailField(user.email);
     signIn.fillPassword(user.password);
     signIn.clickSignin();
     signIn.AssertSuccess(user.firstName,user.lastName);
@@ -54,13 +54,13 @@ it('Search test',()=>{
     search.assertSuccessAdd();
 })
 })
-it('Purchase test',()=>{
+it.only('Purchase test',()=>{
     cy.visit('/')
     cy.get('@user').then((user)=>{
     cy.contains('Sign In ').click();
     const signIn= new SignIn;
     const purchase=new Purchase;
-    signIn.fillEmail(user.email);
+    signIn.typeinEmailField(user.email);
     signIn.fillPassword(user.password);
     signIn.clickSignin();
     signIn.AssertSuccess(user.firstName,user.lastName);
