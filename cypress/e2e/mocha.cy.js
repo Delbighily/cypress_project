@@ -11,20 +11,20 @@ beforeEach(()=>{
 
 
 
-it('Sign up test',()=>{
+it.only('Sign up test',()=>{
     cy.visit('/')
     cy.get('@user').then((user)=>{
     cy.contains('Create an Account').click();
     const ob1=new Signup;
     ob1.checkPageTitle();
     ob1.setUserName(user.firstName,user.lastName);
-    ob1.setEmailPasswprd(user.email,user.password);
+    ob1.setEmailPassword(user.email,user.password);
     ob1.confirmPassword(user.password);
     ob1.clickSubmit();
     ob1.AssertSuccess();
 })
 })
-it.only('Sign in test',()=>{
+it('Sign in test',()=>{
     cy.visit('/')
     cy.get('@user').then((user)=>{
     cy.contains('Sign In ').should('be.visible').click();
