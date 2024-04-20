@@ -18,7 +18,7 @@ it('Sign up test',()=>{
     const ob1=new Signup;
     ob1.checkPageTitle();
     ob1.setUserName(user.firstName,user.lastName);
-    ob1.setEmailPasswprd(user.email,user.password);
+    ob1.setEmailPassword(user.email,user.password);
     ob1.confirmPassword(user.password);
     ob1.clickSubmit();
     ob1.AssertSuccess();
@@ -29,7 +29,7 @@ it('Sign in test',()=>{
     cy.get('@user').then((user)=>{
     cy.contains('Sign In ').should('be.visible').click();
     const ob2=new SignIn;
-    ob2.fillEmail(user.email);
+    ob2.typeinEmailField(user.email);
     ob2.fillPassword(user.password);
     ob2.clickSignin();
     ob2.AssertSuccess(user.firstName,user.lastName);
@@ -41,7 +41,7 @@ it('Search test',()=>{
     cy.contains('Sign In ').click();
     const signIn= new SignIn;
     const search= new Search;
-    signIn.fillEmail(user.email);
+    signIn.typeinEmailField(user.email);
     signIn.fillPassword(user.password);
     signIn.clickSignin();
     signIn.AssertSuccess(user.firstName,user.lastName);
@@ -60,7 +60,7 @@ it('Purchase test',()=>{
     cy.contains('Sign In ').click();
     const signIn= new SignIn;
     const purchase=new Purchase;
-    signIn.fillEmail(user.email);
+    signIn.typeinEmailField(user.email);
     signIn.fillPassword(user.password);
     signIn.clickSignin();
     signIn.AssertSuccess(user.firstName,user.lastName);
@@ -86,7 +86,7 @@ it('checkout test',()=>{
     const signIn= new SignIn;
     const purchase=new Purchase;
     const checkout=new Checkout;
-    signIn.fillEmail(user.email);
+    signIn.typeinEmailField(user.email);
     signIn.fillPassword(user.password);
     signIn.clickSignin();
     signIn.AssertSuccess(user.firstName,user.lastName);
@@ -120,7 +120,7 @@ it.only('Rate product test',()=>{
     const signIn= new SignIn;
     const purchase=new Purchase;
     const rate=new Rate;
-    signIn.fillEmail(user.email);
+    signIn.typeinEmailField(user.email);
     signIn.fillPassword(user.password);
     signIn.clickSignin();
     signIn.AssertSuccess(user.firstName,user.lastName);

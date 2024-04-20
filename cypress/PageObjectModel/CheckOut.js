@@ -12,60 +12,103 @@ class Checkout{
     nextBTN="[data-role=opc-continue]"
     placeOrderBTN="Place Order"
 
+    //Elements Getters
+    getCartPageBTN()
+    {
+        return cy.get(this.CartPageBTN);
+    }
+    getFirstNameField()
+    {
+        return cy.get(this.firstNameField);
+    }
+    getLastNameField()
+    {
+        return cy.get(this.lastNameField);
+    }
+    getCountryField()
+    {
+        return cy.get(this.countryField);
+    }
+    getAddressFields()
+    {
+        return cy.get(this.addressFields);
+    }
+    getCityField()
+    {
+        return cy.get(this.cityField);
+    }
+    getPostCodeField()
+    {
+        return cy.get(this.postCodeField);
+    }
+    getPhoneField()
+    {
+        return cy.get(this.phoneField);
+    }
+    getNextBTN()
+    {
+        return cy.get(this.nextBTN);
+    }
+    getPlaceOrderBTN()
+    {
+        return cy.contains(this.placeOrderBTN,{timeout:10000});
+    }
+
+    //Interactions
     goToCartPage()
     {
-        cy.get(this.CartPageBTN).wait(3000).click({force:true});
+        this.getCartPageBTN().wait(3000).click({force:true});
     }
 
     fillFirstNameField(firstname)
     {
-        cy.wait(10000).get(this.firstNameField).clear().type(firstname);
+        this.getFirstNameField().wait(10000).clear().type(firstname);
     }
 
     fillLastName(lastname)
     {
-        cy.get(this.lastNameField).clear().type(lastname);
+        this.getLastNameField().clear().type(lastname);
     }
 
     selectCountry(country)
     {
-        cy.get(this.countryField).select(country)
+        this.getCountryField().select(country)
     }
 
     fillAddress(building,floor,street)
     {
-        cy.get(this.addressFields).eq(5).clear().type(building);
-        cy.get(this.addressFields).eq(6).clear().type(floor);
-        cy.get(this.addressFields).eq(7).clear().type(street);
+        this.getAddressFields().eq(5).clear().type(building);
+        this.getAddressFields().eq(6).clear().type(floor);
+        this.getAddressFields().eq(7).clear().type(street);
     }
 
     fillcity(city)
     {
-        cy.get(this.cityField).type(city);
+        this.getCityField().type(city);
     }
 
     fillPostCode(zip)
     {
-        cy.get(this.postCodeField).type(zip);
+        this.getPostCodeField().type(zip);
     }
 
     fillTelephone(phone)
     {
-        cy.get(this.phoneField).type(phone);
+        this.getPhoneField().type(phone);
     }
 
     clickNextBTN()
     {
-        cy.get(this.nextBTN).click()
+        this.getNextBTN().click()
     }
 
     clickPlaceOrder()
     {
-        cy.contains(this.placeOrderBTN,{timeout:10000}).click();
+        this.getPlaceOrderBTN().click();
     }
 
     assertSuccessfullCheckout()
     {
         cy.contains('Your order number is: ',{timeout:10000}).should('be.visible');
     }
-}export default Checkout
+}export default Checkout;

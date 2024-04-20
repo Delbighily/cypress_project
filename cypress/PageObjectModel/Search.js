@@ -1,3 +1,4 @@
+
 class Search
 {
     //Locators
@@ -8,33 +9,60 @@ class Search
     successMessage=".message-success"
     loggedInMessage=".logged-in"
 
+    //Elements Getters
+    getSearchBar()
+    {
+        return cy.get(this.searchBar);
+    }
+    getItemPath()
+    {
+        return cy.get(this.itemPath);
+    }
+    getSearchedProductName()
+    {
+        return cy.get(this.searchedProductName);
+    }
+    getAddToWishlistBTN()
+    {
+        return cy.contains(this.addToWishlistBTN);
+    }
+    getSuccessMessage()
+    {
+        return cy.get(this.successMessage);
+    }
+    getLoggedInMessage()
+    {
+        return cy.get(this.loggedInMessage,{timeout:10000});
+    }
+
+    //Interactions
     assertValidSignIn()
     {
-        cy.get(this.loggedInMessage,{timeout:10000}).should('be.visible');
+        this.getLoggedInMessage().should('be.visible');
     }
     
     typeInSearchBar(word)
     {
-        cy.get(this.searchBar).should('be.visible').type(word+'{enter}');
+        this.getSearchBar().should('be.visible').type(word+'{enter}');
     }
 
     getSearchedItem()
     {
-        cy.get(this.itemPath).click();
+        this.getItemPath().click();
     }
 
     assertProductName(word)
     {
-        cy.get(this.searchedProductName).should('include.text',word)//The word it asserts is case sensitive.
+        this.getSearchedProductName().should('include.text',word)//The word it asserts is case sensitive.
     }
 
     clickAddtoWishlist()
     {
-        cy.contains(this.addToWishlistBTN).click();
+        this.getAddToWishlistBTN().click();
     }
 
     assertSuccessAdd()
     {
-        cy.get(this.successMessage).should('be.visible');
+        this.getSuccessMessage().should('be.visible');
     }
 }export default Search;

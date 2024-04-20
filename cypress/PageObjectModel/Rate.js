@@ -9,39 +9,69 @@ class Rate{
     submitReviewBTN=".actions-primary > .action > span"
     successMessage=".message-success"
 
+    //Elements Getters
+    getReviewTab()
+    {
+        return cy.get(this.reviewTab);
+    }
+    getRatingStar()
+    {
+        return cy.get(this.ratingStar);
+    }
+    getNickNameField()
+    {
+        return cy.get(this.nickNameField);
+    }
+    getSummaryField()
+    {
+        return cy.get(this.summaryField);
+    }
+    getReviewField()
+    {
+        return cy.get(this.reviewField);
+    }
+    getSubmitReviewBTN()
+    {
+        return cy.get(this.submitReviewBTN);
+    }
+    getSuccessMessage()
+    {
+        return cy.get(this.successMessage);
+    }
 
+    //Interactions
     clickReviewTab()
     {
-        cy.get(this.reviewTab).click();
+        this.getReviewTab().click();
     }
 
     give4Star()
     {
-        cy.get(this.ratingStar).click({force:true});
+        this.getRatingStar().click({force:true});
     }
 
     typeName(name)
     {
-        cy.get(this.nickNameField).wait(3000).clear().type(name)
+        this.getNickNameField().wait(3000).clear().type(name)
     }
 
     typeSummary()
     {
-        cy.get(this.summaryField).wait(1000).type('good value for the money');
+        this.getSummaryField().wait(1000).type('good value for the money');
     }
 
     typeReview()
     {
-        cy.get(this.reviewField).wait(1000).type('would really recommend it to my friends');
+        this.getReviewField().wait(1000).type('would really recommend it to my friends');
     }
 
     clickSubmitReview()
     {
-        cy.get(this.submitReviewBTN).click();
+        this.getSubmitReviewBTN().click();
     }
 
     assertSuccessReview()
     {
-        cy.get(this.successMessage).should('be.visible');
+        this.getSuccessMessage().should('be.visible');
     }
-}export default Rate
+}export default Rate;
