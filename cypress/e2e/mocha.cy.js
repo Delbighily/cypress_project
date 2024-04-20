@@ -54,7 +54,7 @@ it('Search test',()=>{
     search.assertSuccessAdd();
 })
 })
-it.only('Purchase test',()=>{
+it('Purchase test',()=>{
     cy.visit('/')
     cy.get('@user').then((user)=>{
     cy.contains('Sign In ').click();
@@ -86,7 +86,7 @@ it('checkout test',()=>{
     const signIn= new SignIn;
     const purchase=new Purchase;
     const checkout=new Checkout;
-    signIn.fillEmail(user.email);
+    signIn.typeinEmailField(user.email);
     signIn.fillPassword(user.password);
     signIn.clickSignin();
     signIn.AssertSuccess(user.firstName,user.lastName);
@@ -113,14 +113,14 @@ it('checkout test',()=>{
     checkout.assertSuccessfullCheckout();
 })
 })
-it('Rate product test',()=>{
+it.only('Rate product test',()=>{
     cy.visit('/')
     cy.get('@user').then((user)=>{
     cy.contains('Sign In ').click();
     const signIn= new SignIn;
     const purchase=new Purchase;
     const rate=new Rate;
-    signIn.fillEmail(user.email);
+    signIn.typeinEmailField(user.email);
     signIn.fillPassword(user.password);
     signIn.clickSignin();
     signIn.AssertSuccess(user.firstName,user.lastName);
