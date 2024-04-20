@@ -4,28 +4,46 @@ class SignIn
     emailField="#email"
     passwordField="#pass"
     loginBTN="#send2"
+    loginLBL=".logged-in"
 
+
+    //Elements Getters
     getEmailField()
     {
         return cy.get(this.emailField)
-        //should('be.visible')
     }
 
+    getPassField()
+    {
+        return cy.get(this.passwordField);
+    }
+
+    getSignInBTN()
+    {
+        return cy.get(this.loginBTN);
+    }
+
+    getLoginLBL()
+    {
+        return cy.get(this.loginLBL)
+    }
+
+    //Interactions
     typeinEmailField(mail)
     {
-        this.getEmailField().type(mail)
+        this.getEmailField().type(mail).should('be.visible')
     }
 
     fillPassword(pass)
     {
-        cy.get(this.passwordField).should('be.visible').type(pass);
+        this.getPassField().should('be.visible').type(pass);
     }
     clickSignin()
     {
-        cy.get(this.loginBTN).should('be.visible').first().click();
+        this.getSignInBTN().first().should('be.visible').click();
     }
     AssertSuccess(fName,lName)
     {
-        cy.get('.logged-in').should('contain.text','Welcome, ',fName+lName+'!');
+        this.getLoginLBL().should('contain.text','Welcome, ',fName+lName+'!');
     }
 }export default SignIn;
